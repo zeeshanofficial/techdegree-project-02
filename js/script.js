@@ -40,9 +40,12 @@ const showPage = (list, page) => {
   let endIndex = page * perPage;
   for(let i=0; i<list.length; i+= 1){
     if(i>=startIndex && i<= endIndex){
-      return list[i];
+      list[i].style.display='block';
+    } else{
+      list[i].style.display='none';
     }
   }
+  
 }
 
 
@@ -51,34 +54,44 @@ const showPage = (list, page) => {
    Create the `appendPageLinks function` to generate, append, and add 
    functionality to the pagination buttons.
 ***/
-const page = document.querySelector('.page');
 
-const appendPageLinks = (listItems) => {
-  const pages = Math.ceil(listItems.length/perPage);
+
+const appendPageLinks = (list) => {
+
+  const pages = list.length/perPage;
+
+  const pageContainer = document.querySelector('.page');
   const pageDiv = document.createElement('div');
-  pageDiv.className = 'pagination';
-  page.appendChild(pageDiv);
   const ul = document.createElement('ul');
-  const a = document.createElement('a');
-  const li = document.createElement('li');
+
+  pageDiv.className = 'pagination';
+  pageContainer.appendChild(pageDiv);
   pageDiv.appendChild(ul);
-  for(let i= 0; i<pages.length; i+= 1){
-      ul.appendChild(li);
-      li.appendChild(a);
-      a[i].href = '#';
-      a[i].textContent = i;
+
+  for(let i= 1; i<pages.length; i+= 1){
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    a[i].href = '#';
+    a[i].textContent = i;
+    ul.appendChild(li);
+    li.appendChild(a);
   }
-    a.addEventListener('click', (e) =>{
+    const aLinks = document.querySelector('a');
+    aLinks[1].className = 'active';
 
-      for(let i=0; i<a.length; i +=1){
-        a.className = '';
+    ul.addEventListener('click', (e) =>{
+
+      for(let i=1; i<aLinks.length; i +=1) {
+        aLinks[i].className = '';
       }
-      
-      showPage(listItems, i);
       e.target.className = 'active';
-    })
-}
+      const clickedListNumber = e.target.textContent;
+      showPage(listItems, clickedListNumber);
+    });
+    
+};
 
+showPage(listItems, 1);
 appendPageLinks(listItems);
 
 
