@@ -58,36 +58,35 @@ const showPage = (list, page) => {
 
 const appendPageLinks = (list) => {
 
-  const pages = list.length/perPage;
+  const pages = Math.ceil(list.length/perPage);
 
   const pageContainer = document.querySelector('.page');
   const pageDiv = document.createElement('div');
   const ul = document.createElement('ul');
+  const li = document.createElement('li');
+  const a = document.createElement('a');
 
-  pageDiv.className = 'pagination';
-  pageContainer.appendChild(pageDiv);
-  pageDiv.appendChild(ul);
-
-  for(let i= 1; i<pages.length; i+= 1){
-    const li = document.createElement('li');
-    const a = document.createElement('a');
-    a[i].href = '#';
-    a[i].textContent = i;
-    ul.appendChild(li);
-    li.appendChild(a);
+  for(let i= 0; i < pages.length; i+= 1){
+      a.href = '#';
+      a[i].textContent = i+1;
+      pageDiv.className = 'pagination';
+      li.appendChild(a);
+      ul.appendChild(li);
+      pageDiv.appendChild(ul);
+      pageContainer.appendChild(pageDiv);
   }
-    const aLinks = document.querySelector('a');
-    aLinks[1].className = 'active';
 
-    ul.addEventListener('click', (e) =>{
+  const aLinks = document.querySelectorAll('a');
+  aLinks[0].className = 'active';
 
-      for(let i=1; i<aLinks.length; i +=1) {
-        aLinks[i].className = '';
-      }
-      e.target.className = 'active';
-      const clickedListNumber = e.target.textContent;
-      showPage(listItems, clickedListNumber);
-    });
+  ul.addEventListener('click', (e) => {
+    for(let i=0; i<aLinks.length; i +=1) {
+      aLinks[i].className = '';
+    }
+    e.target.className = 'active';
+    const clickedListNumber = e.target.textContent;
+    showPage(listItems, clickedListNumber);
+  });
     
 };
 
