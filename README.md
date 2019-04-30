@@ -1,6 +1,6 @@
 # techdegree-project-02
 
-In this project, i have build a List Pagination and filtering web application
+In this project, i have build a List Pagination and filtering web application  
 This is a popular and very common web development technique known as "pagination" to enhance the usability of a web page.
 
 Features :zap: :  
